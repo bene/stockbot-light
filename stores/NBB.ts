@@ -1,5 +1,8 @@
-function check(content: string): boolean {
-  return content.includes("549,00");
+function check(content: string, url: string): string | null {
+  if (content.includes("549,00")) {
+    return url;
+  }
+  return null;
 }
 
 export { check };

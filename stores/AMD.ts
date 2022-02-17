@@ -1,13 +1,13 @@
 import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
-function check(content: string): boolean {
+function check(content: string, url: string): string | null {
   const doc = new DOMParser().parseFromString(content, "text/html");
   const elements = doc?.querySelectorAll(
     "#block-amd-content > div > div > div > div > div > div > article"
   );
 
   if (!elements) {
-    return false;
+    return null;
   }
 
   const targets = [
@@ -25,12 +25,12 @@ function check(content: string): boolean {
         !element.textContent.includes("Vergriffen") ||
         element.textContent.includes("Add to cart")
       ) {
-        return true;
+        return url;
       }
     }
   }
 
-  return false;
+  return null;
 }
 
 export { check };

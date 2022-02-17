@@ -1,27 +1,27 @@
 import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
-function check(content: string): boolean {
+function check(content: string): string | null {
   const doc = new DOMParser().parseFromString(content, "text/html");
-  const elements = doc?.querySelectorAll(
-    ".product-details-list-tile, .featured-container-xl"
-  );
+  const elements = doc?.querySelectorAll("div.buy > div:nth-child(1)");
 
   if (!elements) {
-    return false;
+    return null;
   }
 
   for (const element of elements) {
     const content = element.textContent;
-    if (
-      (!content.includes("DERZEIT NICHT VERFÜGBAR") &&
-        !content.includes("OUT_OF_STOCK")) ||
-      content.includes("JETZT KAUFEN")
-    ) {
-      return true;
+    const data = JSON.parse(content);
+
+    if (data.length !== 0) {
+      const link = data[0].directPurchaseLink ?? data[0].purchaseLink;
+
+      if (link) {
+        return link;
+      }
     }
   }
 
-  return false;
+  return null;
 }
 
 export { check };
