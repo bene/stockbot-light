@@ -69,7 +69,9 @@ async function main() {
 }
 
 Discord.sendRawMessage(
-  `Now running.\n\nStores: ${stores.map((s) => s.name).join(", ")}`
+  `StockBot now running on **${Deno.hostname()}**\n\nStores: ${stores
+    .map((s) => s.name)
+    .join(", ")}\nInterval: ${interval} seconds`
 );
 
 async function loop() {
