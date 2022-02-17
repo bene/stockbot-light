@@ -7,10 +7,11 @@ import * as Discord from "./discord.ts";
 
 import { sleep, resolveRedirect } from "./utils.ts";
 import { startListening } from "./server.ts";
-import { userAgent, interval, timeout } from "./environment.ts";
+import { getUserAgent, interval, timeout } from "./environment.ts";
 
 await Deno.mkdir("screenshots", { recursive: true });
 
+const userAgent = getUserAgent();
 const stores = [
   {
     name: "AMD",

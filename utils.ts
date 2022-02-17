@@ -1,4 +1,4 @@
-import { userAgent } from "./environment.ts";
+import { getUserAgent } from "./environment.ts";
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -8,7 +8,7 @@ async function resolveRedirect(link: string): Promise<string | null> {
   const res = await fetch(link, {
     redirect: "manual",
     headers: {
-      "User-Agent": userAgent,
+      "User-Agent": getUserAgent(),
     },
   });
 
