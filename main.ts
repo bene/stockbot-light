@@ -1,6 +1,7 @@
 import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";
 
 import * as AMD from "./stores/AMD.ts";
+import * as NBB from "./stores/NBB.ts";
 import * as Nvidia from "./stores/Nvidia.ts";
 import * as Discord from "./discord.ts";
 
@@ -17,12 +18,20 @@ const stores = [
     check: AMD.check,
   },
   {
+    name: "NBB",
+    url: "https://www.notebooksbilliger.de/pc+hardware/grafikkarten/nvidia/geforce+rtx+3070+nvidia/page/1?sort=price&order=asc&availability=alle",
+    check: NBB.check,
+  },
+  {
     name: "Nvidia",
     url: "https://store.nvidia.com/de-de/geforce/store/?page=1&limit=9&locale=de-de&gpu=RTX%203070,RTX%203070%20Ti,RTX%203080,RTX%203060,RTX%203060%20Ti&manufacturer=NVIDIA",
     check: Nvidia.check,
   },
 ];
-const browser = await puppeteer.launch();
+
+const browser = await puppeteer.launch({
+  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+});
 
 async function main() {
   console.log(`[${new Date().toLocaleTimeString()}] Starting new run.`);
